@@ -10,8 +10,8 @@ body, html {
   font-family: "Comic Sans MS", cursive, sans-serif;
   background-image: url("DokiDokiSunshine.jpg");
   text-align: center;
-  color: orange;
-  font-size: 5em;
+  color: rgb(243, 164, 137);
+  font-size: 2em;
   height: 100%;
   margin: 0;
   padding: 0px;

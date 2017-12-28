@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <title>HAPPY PARTY TRAIN!</title>
+</head>
+<body>
+  <div id="background" class="bg">
+    <h1>Click <3</h1>
+  </div>
+  <script>
+    const SCREEN_WIDTH = window.screen.availWidth
+    const SCREEN_HEIGHT = window.screen.availHeight
+    const WINDOW_WIDTH = 500
+    const WINDOW_HEIGHT = 280
+    const VELOCITY = 40
+    const MARGIN = 10
+    const TICK_LENGTH = 50
+
+    // Child window code
+    if (window.opener) {
+
+      let bgElem = document.getElementById('background')
+      bgElem.parentNode.removeChild(bgElem)
+
+      let vx = VELOCITY * (Math.random() - .5)
+      let vy = VELOCITY * (Math.random() - .5)
+
+      window.setInterval(() => {
+        const x = window.screenX
+        const y = window.screenY
+        const width = window.outerWidth
+        const height = window.outerHeight
+
+        if (x < MARGIN) {
+          vx = Math.abs(vx)
+        }
+
+        if (x + width > SCREEN_WIDTH - MARGIN) {
+          vx = Math.abs(vx) * -1
+        }
+
+        if (y < MARGIN) {
+          vy = Math.abs(vy)
+        }
+
+        if (y + height > SCREEN_HEIGHT - MARGIN) {
+          vy = Math.abs(vy) * -1
+        }
+
+        window.moveBy(vx, vy)
+      }, TICK_LENGTH)
+
+      const VIDEOS = ['MiracleWave.m4v', 'WaterBlueNewWorld.mp4', 'AwakenThePower.mp4', 'MiraiZura.mp4']
+      const TITLES =['Miracle Wave', 'Water Blue New World', 'Awaken the Power', 'Mirai Zura!']
+      const videoElement = document.createElement('video')
+
+      let index = Math.floor(Math.random() * VIDEOS.length)
+
+      document.title = TITLES[index]
+
+      videoElement.src = VIDEOS[index]
+      videoElement.autoplay = true
+      videoElement.loop = true
+      videoElement.width = `${WINDOW_WIDTH}`
+      videoElement.height = `${WINDOW_HEIGHT}`
+
+      document.body.appendChild(videoElement)
+
+      window.onunload = () => {
+        if (!window.opener.closed) {
+          window.opener.onCloseWindow(window)
+        }
+      }
+    }
+
+    // Parent and child window code
+    let wins = []
+    
+    document.addEventListener('click', openWindow)
+
+    function openWindow ()  {
+      focusWindows()
+
+      const win = window.open(window.location.pathname, '', `width=${WINDOW_WIDTH},height=${WINDOW_HEIGHT},left=0,top=0`)
+
+      wins.push(win)
+    }
+
+    function focusWindows () {
+      wins.forEach(win => win.focus())
+    }
+
+    function onCloseWindow (win) {
+      const i = wins.indexOf(win)
+      if (i >= 0) wins.splice(i, 1)
+    }
+
+    let i = 0
+    setInterval(() => {
+      if (wins.length === 0) return
+
+      wins
+      .filter(win => !win.closed)
+      .forEach((win, j) => {
+        win.moveTo(i + (j * 100), i + (j * 100))
+      })
+
+      i += 5
+      i = i % 200
+    }, 100)
+    
+  </script>
+</body>
+</html>

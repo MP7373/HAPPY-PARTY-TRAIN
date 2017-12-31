@@ -7,10 +7,10 @@ body, html {
 
 .bg {
 
-  font-family: "Comic Sans MS", cursive, sans-serif;
+  font-family: 'Capriola', sans-serif;
   background-image: url("DokiDokiSunshine.jpg");
   text-align: center;
-  color: rgb(243, 164, 137);
+  color: black;
   font-size: 2em;
   height: 100%;
   margin: 0;

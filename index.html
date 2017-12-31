@@ -6,6 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" type="text/css" href="style.css">
   <link rel="icon" type="image/png" href="chikaIcon.jpg">
+  <link href='https://fonts.googleapis.com/css?family=Capriola' rel='stylesheet' type='text/css'>
   <title>HAPPY PARTY TRAIN!</title>
 </head>
 <body>
@@ -15,14 +16,16 @@
   <script>
     const SCREEN_WIDTH = window.screen.availWidth
     const SCREEN_HEIGHT = window.screen.availHeight
-    const WINDOW_WIDTH = 500
-    const WINDOW_HEIGHT = 280
-    const VELOCITY = 60
+    const WINDOW_WIDTH = 540
+    const WINDOW_HEIGHT = 303.75
+    const VELOCITY = 50
     const MARGIN = 10
     const TICK_LENGTH = 50
 
+    //rgb(243, 164, 137);
     // Child window code
     if (window.opener) {
+
 
       let bgElem = document.getElementById('background')
       bgElem.parentNode.removeChild(bgElem)
@@ -55,8 +58,33 @@
         window.moveBy(vx, vy)
       }, TICK_LENGTH)
 
-      const VIDEOS = ['MiracleWave.m4v', 'WaterBlueNewWorld.mp4', 'AwakenThePower.mp4', 'MiraiZura.mp4']
-      const TITLES =['Miracle Wave', 'Water Blue New World', 'Awaken the Power', 'Mirai Zura!']
+      const VIDEOS = [
+        'MiracleWave.m4v',
+        'WaterBlueNewWorld.mp4',
+        'AwakenThePower.mp4',
+        'MiraiZura.mp4',
+        'BuuBuuBuu.mp4',
+        'HandInHand.mp4',
+        'Yousorou.mp4',
+        'RubySqeak.mp4',
+        'ChikaRecruiting.mp4',
+        'GanbaRuby.mp4',
+        'ItsJoke.mp4'
+      ]
+      const TITLES =[
+        'Miracle Wave',
+        'Water Blue New World',
+        'Awaken the Power',
+        'Mirai Zura!',
+        'BUU BUU BUU!',
+        'Hand in Hand!',
+        'ヨーソロー',
+        'Ruby Sqeak',
+        'School Idol Bu!',
+        'Ganba Ruby!',
+        'It\'s Joke!'
+      ]
+
       const videoElement = document.createElement('video')
 
       let index = Math.floor(Math.random() * VIDEOS.length)
@@ -76,6 +104,7 @@
           window.opener.onCloseWindow(window)
         }
       }
+      
     }
 
     // Parent and child window code

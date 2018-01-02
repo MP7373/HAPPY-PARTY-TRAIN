@@ -24,9 +24,7 @@
     const TICK_LENGTH = 50
 
     //only runs in opened windows from same origin
-    console.log(window.opener.location.href)
-    console.log(typeof window.opener.location.href)
-    if (window.opener && window.opener.location.href !== null) {
+    if (window.opener && window.opener.location.origin) {
       console.log(window.opener.location)
 
       let bgElem = document.getElementById('background')

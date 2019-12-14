@@ -1,10 +1,11 @@
 const SCREEN_WIDTH = window.screen.availWidth
 const SCREEN_HEIGHT = window.screen.availHeight
-const WINDOW_WIDTH = Math.max(Math.random() / 2, .2) * SCREEN_WIDTH
+const WINDOW_WIDTH = Math.max(Math.random() * .8, .1) * SCREEN_WIDTH
 const WINDOW_HEIGHT = WINDOW_WIDTH / 1.8
 const OUTER_WINDOW_WIDTH = WINDOW_WIDTH + window.outerWidth - window.innerWidth
 const OUTER_WINDOW_HEIGHT = WINDOW_HEIGHT + window.outerHeight - window.innerHeight
 const VELOCITY = 50
+const MIN_VELOCITY = VELOCITY * .2
 const MARGIN = 10
 const TICK_LENGTH = 50
 
@@ -35,8 +36,17 @@ if (parentWindow) {
   const bgElem = document.getElementById('background')
   bgElem.parentNode.removeChild(bgElem)
 
-  let vx = VELOCITY * (Math.random() - .5)
-  let vy = VELOCITY * (Math.random() - .5)
+  const vxModifier = (Math.random() - .5)
+  let vx = VELOCITY * vxModifier
+  if (Math.abs(vx) < MIN_VELOCITY) {
+    vx = vx > 0 ? MIN_VELOCITY : -1 * MIN_VELOCITY
+  }
+
+  const vyModifier = (Math.random() - .5)
+  let vy = VELOCITY * vyModifier
+  if (Math.abs(vy) < MIN_VELOCITY) {
+    vy = vy > 0 ? MIN_VELOCITY : -1 * MIN_VELOCITY
+  }
 
   const videoElement = document.createElement('video')
 
@@ -78,6 +88,17 @@ if (parentWindow) {
 
     window.moveBy(vx, vy)
   }, TICK_LENGTH)
+  
+  window.setInterval(() => {
+    vx *= (1 + (Math.random() - .5))
+    if (Math.abs(vx) < MIN_VELOCITY) {
+      vx = vx > 0 ? MIN_VELOCITY : -1 * MIN_VELOCITY
+    }
+    vy *= (1 + (Math.random() - .5))
+    if (Math.abs(vy) < MIN_VELOCITY) {
+      vy = vy > 0 ? MIN_VELOCITY : -1 * MIN_VELOCITY
+    }
+  }, 3000)
 
   window.onunload = () => {
     if (!window.opener.closed) {

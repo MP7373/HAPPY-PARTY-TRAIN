@@ -44,21 +44,20 @@ if (window.opener) {
 
   document.body.appendChild(videoElement)
   
-  window.resizeTo(OUTER_WINDOW_WIDTH, OUTER_WINDOW_HEIGHT)
-  
   window.setInterval(() => {
+    window.resizeTo(OUTER_WINDOW_WIDTH, OUTER_WINDOW_HEIGHT)
     const x = window.screenX
     const y = window.screenY
 
     if (x < MARGIN) {
       vx = Math.abs(vx)
-    } else if (x + WINDOW_WIDTH > SCREEN_WIDTH - MARGIN) {
+    } else if (x + OUTER_WINDOW_WIDTH > SCREEN_WIDTH - MARGIN) {
       vx = Math.abs(vx) * -1
     }
 
     if (y < MARGIN) {
       vy = Math.abs(vy)
-    } else if (y + WINDOW_HEIGHT > SCREEN_HEIGHT - MARGIN) {
+    } else if (y + OUTER_WINDOW_HEIGHT > SCREEN_HEIGHT - MARGIN) {
       vy = Math.abs(vy) * -1
     }
 

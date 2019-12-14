@@ -22,6 +22,8 @@ const TITLES =[
   'Hand in Hand!',
 ]
 
+const wins = []
+
 //only runs in opened windows
 if (window.opener) {
   const bgElem = document.getElementById('background')
@@ -32,7 +34,11 @@ if (window.opener) {
 
   const videoElement = document.createElement('video')
 
-  let index = Math.floor(Math.random() * VIDEOS.length)
+  let index
+  
+  do {
+    index = Math.floor(Math.random() * VIDEOS.length)
+  } while (wins.length < TITLES.length && wins.includes(index))
 
   document.title = TITLES[index]
 
@@ -72,8 +78,6 @@ if (window.opener) {
 }
 
 // Parent and child window code
-const wins = []
-
 document.addEventListener('click', openWindow)
 
 function openWindow ()  {

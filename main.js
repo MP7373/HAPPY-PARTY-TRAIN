@@ -22,10 +22,13 @@ const TITLES =[
   'Hand in Hand!',
 ]
 
-const wins = []
+this.wins = []
+const parentWindow = window.opener
 
 //only runs in opened windows
-if (window.opener) {
+if (parentWindow) {
+  //point all child windows wins to parent window wins array
+  this.wins = parentWindow.wins
   const bgElem = document.getElementById('background')
   bgElem.parentNode.removeChild(bgElem)
 

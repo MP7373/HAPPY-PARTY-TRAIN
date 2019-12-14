@@ -8,4 +8,4 @@ of your screen really fast.
 
 To close the windows that are bouncing around just hit CTRL + W on windows or command + W on Mac.
 
-[View on Git Pages](https://mp7373.github.io/HAPPY-PARTY-TRAIN/)
+[View on Git Pages](https://mp7373.github.io/HappyPartyTrain/)

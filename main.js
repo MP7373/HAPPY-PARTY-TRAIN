@@ -23,12 +23,15 @@ const TITLES =[
 ]
 
 this.wins = []
+this.usedVideoIndexes = []
 const parentWindow = window.opener
 
 //only runs in opened windows
 if (parentWindow) {
   //point all child windows wins to parent window wins array
-  this.wins = parentWindow.wins
+  wins = parentWindow.wins
+  usedVideoIndexes = parentWindow.usedVideoIndexes
+
   const bgElem = document.getElementById('background')
   bgElem.parentNode.removeChild(bgElem)
 
@@ -41,11 +44,14 @@ if (parentWindow) {
   
   do {
     index = Math.floor(Math.random() * VIDEOS.length)
-  } while (wins.length < TITLES.length && wins.includes(index))
+  } while (usedVideoIndexes.length < TITLES.length && usedVideoIndexes.includes(index))
+  this.index = index
 
   document.title = TITLES[index]
-
   videoElement.src = VIDEOS[index]
+  
+  usedVideoIndexes.push(index)
+  
   videoElement.autoplay = true
   videoElement.loop = true
   videoElement.width = `${WINDOW_WIDTH}`
@@ -97,5 +103,8 @@ function focusWindows () {
 
 function onCloseWindow (win) {
   const i = wins.indexOf(win)
-  if (i >= 0) wins.splice(i, 1)
+  if (i >= 0) {
+    wins.splice(i, 1)
+    usedVideoIndexes.splice(usedVideoIndexes.indexOf(win.index, 1))
+  }
 }

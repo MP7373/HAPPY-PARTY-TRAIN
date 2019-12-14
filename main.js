@@ -44,8 +44,9 @@ if (window.opener) {
 
   document.body.appendChild(videoElement)
   
+  window.resizeTo(OUTER_WINDOW_WIDTH, OUTER_WINDOW_HEIGHT)
+  
   window.setInterval(() => {
-    window.resizeTo(OUTER_WINDOW_WIDTH, OUTER_WINDOW_HEIGHT)
     const x = window.screenX
     const y = window.screenY
 

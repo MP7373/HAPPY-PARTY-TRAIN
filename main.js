@@ -2,7 +2,7 @@ let firstWindow = true
 const SCREEN_WIDTH = window.screen.availWidth
 const SCREEN_HEIGHT = window.screen.availHeight
 const WINDOW_WIDTH = 540
-const WINDOW_HEIGHT = 303.75
+const WINDOW_HEIGHT = 300
 const VELOCITY = 50
 const MARGIN = 10
 const TICK_LENGTH = 50
@@ -11,30 +11,14 @@ const VIDEOS = [
   'assets/videos/MiracleWave.m4v',
   'assets/videos/WaterBlueNewWorld.mp4',
   'assets/videos/AwakenThePower.mp4',
-  'assets/videos/MiraiZura.mp4',
-  'assets/videos/BuuBuuBuu.mp4',
   'assets/videos/HandInHand.mp4',
-  'assets/videos/Yousorou.mp4',
-  'assets/videos/RubySqeak.mp4',
-  'assets/videos/ChikaRecruiting.mp4',
-  'assets/videos/GanbaRuby.mp4',
-  'assets/videos/ItsJoke.mp4',
-  'assets/videos/Yohane.mp4'
 ]
 
 const TITLES =[
   'Miracle Wave',
   'Water Blue New World',
   'Awaken the Power',
-  'Mirai Zura!',
-  'BUU BUU BUU!',
   'Hand in Hand!',
-  'ヨーソロー',
-  'Ruby Sqeak',
-  'School Idol Bu!',
-  'Ganba Ruby!',
-  'It\'s Joke!',
-  'Yahane Descends'
 ]
 
 //only runs in opened windows
@@ -94,7 +78,7 @@ if (window.opener) {
 }
 
 // Parent and child window code
-let wins = []
+const wins = []
 
 document.addEventListener('click', openWindow)
 

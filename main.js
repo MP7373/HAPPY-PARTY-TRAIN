@@ -1,8 +1,7 @@
-let firstWindow = true
 const SCREEN_WIDTH = window.screen.availWidth
 const SCREEN_HEIGHT = window.screen.availHeight
-let WINDOW_WIDTH = Math.max(Math.random() / 2, .2) * SCREEN_WIDTH;
-let WINDOW_HEIGHT = WINDOW_WIDTH / 1.8;
+const WINDOW_WIDTH = Math.max(Math.random() / 2, .2) * SCREEN_WIDTH
+const WINDOW_HEIGHT = WINDOW_WIDTH / 1.8
 const VELOCITY = 50
 const MARGIN = 10
 const TICK_LENGTH = 50
@@ -23,7 +22,6 @@ const TITLES =[
 
 //only runs in opened windows
 if (window.opener) {
-
   const bgElem = document.getElementById('background')
   bgElem.parentNode.removeChild(bgElem)
 
@@ -44,27 +42,20 @@ if (window.opener) {
 
   document.body.appendChild(videoElement)
   
-    window.setInterval(() => {
+  window.setInterval(() => {
     const x = window.screenX
     const y = window.screenY
-    const width = window.outerWidth
-    videoElement.width = width
-    const height = window.outerHeight
-    videoElement.height = height
+    window.resizeTo(WINDOW_WIDTH, WINDOW_HEIGHT)
 
     if (x < MARGIN) {
       vx = Math.abs(vx)
-    }
-
-    if (x + width > SCREEN_WIDTH - MARGIN) {
+    } else if (x + WINDOW_WIDTH > SCREEN_WIDTH - MARGIN) {
       vx = Math.abs(vx) * -1
     }
 
     if (y < MARGIN) {
       vy = Math.abs(vy)
-    }
-
-    if (y + height > SCREEN_HEIGHT - MARGIN) {
+    } else if (y + WINDOW_HEIGHT > SCREEN_HEIGHT - MARGIN) {
       vy = Math.abs(vy) * -1
     }
 
@@ -76,7 +67,6 @@ if (window.opener) {
       window.opener.onCloseWindow(window)
     }
   }
-  
 }
 
 // Parent and child window code
@@ -87,7 +77,7 @@ document.addEventListener('click', openWindow)
 function openWindow ()  {
   focusWindows()
 
-  const win = window.open(window.location.pathname, '', `width=${WINDOW_WIDTH},height=${WINDOW_HEIGHT},left=0,top=0`)
+  const win = window.open(window.location.pathname, '', `width=${WINDOW_WIDTH}, height=${WINDOW_HEIGHT}, left=0, top=0`)
 
   wins.push(win)
 }

@@ -2,6 +2,8 @@ const SCREEN_WIDTH = window.screen.availWidth
 const SCREEN_HEIGHT = window.screen.availHeight
 const WINDOW_WIDTH = Math.max(Math.random() / 2, .2) * SCREEN_WIDTH
 const WINDOW_HEIGHT = WINDOW_WIDTH / 1.8
+const OUTER_WINDOW_WIDTH = WINDOW_WIDTH + window.outerWidth - window.innerWidth
+const OUTER_WINDOW_HEIGHT = WINDOW_HEIGHT + window.outerHeight - window.innerHeight
 const VELOCITY = 50
 const MARGIN = 10
 const TICK_LENGTH = 50
@@ -43,9 +45,9 @@ if (window.opener) {
   document.body.appendChild(videoElement)
   
   window.setInterval(() => {
+    window.resizeTo(OUTER_WINDOW_WIDTH, OUTER_WINDOW_HEIGHT)
     const x = window.screenX
     const y = window.screenY
-    window.resizeTo(WINDOW_WIDTH, WINDOW_HEIGHT)
 
     if (x < MARGIN) {
       vx = Math.abs(vx)

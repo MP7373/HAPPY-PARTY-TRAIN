@@ -1,131 +1,151 @@
-const SCREEN_WIDTH = window.screen.availWidth
-const SCREEN_HEIGHT = window.screen.availHeight
-const WINDOW_WIDTH = Math.max(Math.random() * .8, .1) * SCREEN_WIDTH
-const WINDOW_HEIGHT = WINDOW_WIDTH / 1.8
-const OUTER_WINDOW_WIDTH = WINDOW_WIDTH + window.outerWidth - window.innerWidth
-const OUTER_WINDOW_HEIGHT = WINDOW_HEIGHT + window.outerHeight - window.innerHeight
-const VELOCITY = 50
-const MIN_VELOCITY = VELOCITY * .2
-const MARGIN = 10
-const TICK_LENGTH = 50
+const screenWidth = window.screen.availWidth;
+const screenHeight = window.screen.availHeight;
+const minimumImageWidth = 300;
+const windowWidth = Math.max(
+  Math.random() * 0.8 * screenWidth,
+  minimumImageWidth
+);
+const windowHeight = windowWidth / 1.8;
+const outerWindowWidth = windowWidth + window.outerWidth - window.innerWidth;
+const outerWindowHeight =
+  windowHeight + window.outerHeight - window.innerHeight;
+const velocityBase = 15;
+const minimumVelocity = 8;
+const maximumVelocity = 20;
+const speedChangeInterval = 100;
+const margin = 10;
+const tick = 50;
 
-const VIDEOS = [
+const videoLinks = [
   'assets/videos/MiracleWave.m4v',
   'assets/videos/WaterBlueNewWorld.mp4',
   'assets/videos/AwakenThePower.mp4',
-  'assets/videos/HandInHand.mp4',
-]
+  'assets/videos/HandInHand.mp4'
+];
 
-const TITLES =[
+const videoTitles = [
   'Miracle Wave',
   'Water Blue New World',
   'Awaken the Power',
-  'Hand in Hand!',
-]
+  'Hand in Hand!'
+];
 
-this.wins = []
-this.usedVideoIndexes = []
-const parentWindow = window.opener
+this.wins = [];
+this.usedVideoIndexes = [];
+const parentWindow = window.opener;
 
 //only runs in opened windows
 if (parentWindow) {
   //point all child windows wins to parent window wins array
-  wins = parentWindow.wins
-  usedVideoIndexes = parentWindow.usedVideoIndexes
+  wins = parentWindow.wins;
+  usedVideoIndexes = parentWindow.usedVideoIndexes;
 
-  const bgElem = document.getElementById('background')
-  bgElem.parentNode.removeChild(bgElem)
+  const bgElem = document.getElementById('background');
+  bgElem.parentNode.removeChild(bgElem);
 
-  const vxModifier = (Math.random() - .5)
-  let vx = VELOCITY * vxModifier
-  if (Math.abs(vx) < MIN_VELOCITY) {
-    vx = vx > 0 ? MIN_VELOCITY : -1 * MIN_VELOCITY
+  const vxModifier = Math.random() - 0.5;
+  let vx = velocityBase * vxModifier;
+  if (Math.abs(vx) < minimumVelocity) {
+    vx = vx > 0 ? minimumVelocity : -1 * minimumVelocity;
   }
 
-  const vyModifier = (Math.random() - .5)
-  let vy = VELOCITY * vyModifier
-  if (Math.abs(vy) < MIN_VELOCITY) {
-    vy = vy > 0 ? MIN_VELOCITY : -1 * MIN_VELOCITY
+  const vyModifier = Math.random() - 0.5;
+  let vy = velocityBase * vyModifier;
+  if (Math.abs(vy) < minimumVelocity) {
+    vy = vy > 0 ? minimumVelocity : -1 * minimumVelocity;
   }
 
-  const videoElement = document.createElement('video')
+  const videoElement = document.createElement('video');
 
-  let index
-  
+  let index;
+
   do {
-    index = Math.floor(Math.random() * VIDEOS.length)
-  } while (usedVideoIndexes.length < TITLES.length && usedVideoIndexes.includes(index))
-  this.index = index
+    index = Math.floor(Math.random() * videoLinks.length);
+  } while (
+    usedVideoIndexes.length < videoTitles.length &&
+    usedVideoIndexes.includes(index)
+  );
+  this.index = index;
 
-  document.title = TITLES[index]
-  videoElement.src = VIDEOS[index]
-  
-  usedVideoIndexes.push(index)
-  
-  videoElement.autoplay = true
-  videoElement.loop = true
-  videoElement.width = `${WINDOW_WIDTH}`
-  videoElement.height = `${WINDOW_HEIGHT}`
+  document.title = videoTitles[index];
+  videoElement.src = videoLinks[index];
 
-  document.body.appendChild(videoElement)
-  
+  usedVideoIndexes.push(index);
+
+  videoElement.autoplay = true;
+  videoElement.loop = true;
+  videoElement.width = `${windowWidth}`;
+  videoElement.height = `${windowHeight}`;
+
+  document.body.appendChild(videoElement);
+
   window.setInterval(() => {
-    window.resizeTo(OUTER_WINDOW_WIDTH, OUTER_WINDOW_HEIGHT)
-    const x = window.screenX
-    const y = window.screenY
+    window.resizeTo(outerWindowWidth, outerWindowHeight);
+    const x = window.screenX;
+    const y = window.screenY;
 
-    if (x < MARGIN) {
-      vx = Math.abs(vx)
-    } else if (x + OUTER_WINDOW_WIDTH > SCREEN_WIDTH - MARGIN) {
-      vx = Math.abs(vx) * -1
+    if (x < margin) {
+      vx = Math.abs(vx);
+    } else if (x + outerWindowWidth > screenWidth - margin) {
+      vx = Math.abs(vx) * -1;
     }
 
-    if (y < MARGIN) {
-      vy = Math.abs(vy)
-    } else if (y + OUTER_WINDOW_HEIGHT > SCREEN_HEIGHT - MARGIN) {
-      vy = Math.abs(vy) * -1
+    if (y < margin) {
+      vy = Math.abs(vy);
+    } else if (y + outerWindowHeight > screenHeight - margin) {
+      vy = Math.abs(vy) * -1;
     }
 
-    window.moveBy(vx, vy)
-  }, TICK_LENGTH)
-  
+    window.moveBy(vx, vy);
+  }, tick);
+
   window.setInterval(() => {
-    vx *= (1 + (Math.random() - .5))
-    if (Math.abs(vx) < MIN_VELOCITY) {
-      vx = vx > 0 ? MIN_VELOCITY : -1 * MIN_VELOCITY
+    vx *= 1 + (Math.random() - 0.5);
+    if (Math.abs(vx) < minimumVelocity) {
+      vx = vx > 0 ? minimumVelocity : -minimumVelocity;
     }
-    vy *= (1 + (Math.random() - .5))
-    if (Math.abs(vy) < MIN_VELOCITY) {
-      vy = vy > 0 ? MIN_VELOCITY : -1 * MIN_VELOCITY
+    if (Math.abs(vx) > maximumVelocity) {
+      vx = vx > 0 ? maximumVelocity : -maximumVelocity;
     }
-  }, 3000)
+    vy *= 1 + (Math.random() - 0.5);
+    if (Math.abs(vy) < minimumVelocity) {
+      vy = vy > 0 ? minimumVelocity : -minimumVelocity;
+    }
+    if (Math.abs(vy) > maximumVelocity) {
+      vy = vy > 0 ? maximumVelocity : -maximumVelocity;
+    }
+  }, speedChangeInterval);
 
   window.onunload = () => {
     if (!window.opener.closed) {
-      window.opener.onCloseWindow(window)
+      window.opener.onCloseWindow(window);
     }
-  }
+  };
 }
 
 // Parent and child window code
-document.addEventListener('click', openWindow)
+document.addEventListener('click', openWindow);
 
-function openWindow ()  {
-  focusWindows()
+function openWindow() {
+  focusWindows();
 
-  const win = window.open(window.location.pathname, '', `width=${WINDOW_WIDTH}, height=${WINDOW_HEIGHT}, left=0, top=0`)
+  const win = window.open(
+    window.location.pathname,
+    '',
+    `width=${windowWidth}, height=${windowHeight}, left=0, top=0`
+  );
 
-  wins.push(win)
+  wins.push(win);
 }
 
-function focusWindows () {
-  wins.forEach(win => win.focus())
+function focusWindows() {
+  wins.forEach((win) => win.focus());
 }
 
-function onCloseWindow (win) {
-  const i = wins.indexOf(win)
+function onCloseWindow(win) {
+  const i = wins.indexOf(win);
   if (i >= 0) {
-    wins.splice(i, 1)
-    usedVideoIndexes.splice(usedVideoIndexes.indexOf(win.index, 1))
+    wins.splice(i, 1);
+    usedVideoIndexes.splice(usedVideoIndexes.indexOf(win.index, 1));
   }
 }
